@@ -40,7 +40,10 @@ export const products = pgTable("products", {
 export type InsertProduct = InferInsertModel<typeof products>;
 
 export const productsRelations = relations(products, ({ one, many }) => ({
-  brand: one(brands),
+  brand: one(brands, {
+    fields: [products.brandId],
+    references: [brands.id],
+  }),
   variants: many(variants),
 }));
 
@@ -62,7 +65,10 @@ export const variants = pgTable("variants", {
 export type InsertVariant = InferInsertModel<typeof variants>;
 
 export const variantsRelations = relations(variants, ({ one, many }) => ({
-  product: one(products),
+  product: one(products, {
+    fields: [variants.productId],
+    references: [products.id],
+  }),
   prices: many(prices),
 }));
 
@@ -82,5 +88,8 @@ export const prices = pgTable("prices", {
 export type InsertPrice = InferInsertModel<typeof prices>;
 
 export const pricesRelations = relations(prices, ({ one }) => ({
-  variant: one(variants),
+  variant: one(variants, {
+    fields: [prices.variantId],
+    references: [variants.id],
+  }),
 }));

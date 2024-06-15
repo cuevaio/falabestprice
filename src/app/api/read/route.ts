@@ -62,7 +62,7 @@ export const POST = async (request: NextRequest) => {
       variants: {
         id: string;
         attributes: {
-          size: string;
+          size: string; 
           colorName: string | null;
           colorCode: string | null;
         };
